@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'name' => 'Erik van der Berg',
             'email' => 'admin@tenderly.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('2WBE8QrawPqMtshj'),
         ]);
 
         // Tender 1: Active with full data

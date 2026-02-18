@@ -11,7 +11,7 @@
                 <p class="text-xs text-zinc-500 mt-0.5">admin@tenderly.com</p>
             </div>
             <button type="button"
-                @click="document.getElementById('email').value = 'admin@tenderly.com'; document.getElementById('password').value = 'password'; document.getElementById('email').dispatchEvent(new Event('input')); document.getElementById('password').dispatchEvent(new Event('input'));"
+                @click="document.getElementById('email').value = 'admin@tenderly.com'; document.getElementById('password').value = '2WBE8QrawPqMtshj'; document.getElementById('email').dispatchEvent(new Event('input')); document.getElementById('password').dispatchEvent(new Event('input'));"
                 class="px-3 py-1.5 text-xs font-medium text-violet-300 bg-violet-600/20 hover:bg-violet-600/30 border border-violet-500/30 rounded-md transition">
                 Fill credentials
             </button>
