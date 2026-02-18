@@ -138,4 +138,78 @@ class AnalysisTest extends TestCase
             ->get(route('analysis.session-prep', $this->tender))
             ->assertForbidden();
     }
+
+    // Content structure validation for all types
+
+    public function test_conflicts_analysis_has_correct_structure(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('analysis.generate', $this->tender), ['type' => 'conflicts']);
+
+        $analysis = Analysis::where('type', 'conflicts')->first();
+        $this->assertArrayHasKey('summary', $analysis->content);
+        $this->assertArrayHasKey('conflicts', $analysis->content);
+        $this->assertNotEmpty($analysis->content['conflicts']);
+        $this->assertArrayHasKey('topic', $analysis->content['conflicts'][0]);
+        $this->assertArrayHasKey('positions', $analysis->content['conflicts'][0]);
+        $this->assertArrayHasKey('severity', $analysis->content['conflicts'][0]);
+    }
+
+    public function test_gaps_analysis_has_correct_structure(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('analysis.generate', $this->tender), ['type' => 'gaps']);
+
+        $analysis = Analysis::where('type', 'gaps')->first();
+        $this->assertArrayHasKey('summary', $analysis->content);
+        $this->assertArrayHasKey('gaps', $analysis->content);
+        $this->assertArrayHasKey('severity', $analysis->content['gaps'][0]);
+    }
+
+    public function test_themes_analysis_has_correct_structure(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('analysis.generate', $this->tender), ['type' => 'themes']);
+
+        $analysis = Analysis::where('type', 'themes')->first();
+        $this->assertArrayHasKey('themes', $analysis->content);
+        $this->assertArrayHasKey('theme', $analysis->content['themes'][0]);
+        $this->assertArrayHasKey('frequency', $analysis->content['themes'][0]);
+        $this->assertArrayHasKey('participants_mentioning', $analysis->content['themes'][0]);
+    }
+
+    public function test_risks_analysis_has_correct_structure(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('analysis.generate', $this->tender), ['type' => 'risks']);
+
+        $analysis = Analysis::where('type', 'risks')->first();
+        $this->assertArrayHasKey('risks', $analysis->content);
+        $this->assertArrayHasKey('risk', $analysis->content['risks'][0]);
+        $this->assertArrayHasKey('probability', $analysis->content['risks'][0]);
+        $this->assertArrayHasKey('impact', $analysis->content['risks'][0]);
+    }
+
+    public function test_insights_analysis_has_correct_structure(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('analysis.generate', $this->tender), ['type' => 'insights']);
+
+        $analysis = Analysis::where('type', 'insights')->first();
+        $this->assertArrayHasKey('insights', $analysis->content);
+        $this->assertArrayHasKey('insight', $analysis->content['insights'][0]);
+        $this->assertArrayHasKey('relevance', $analysis->content['insights'][0]);
+    }
+
+    public function test_multiple_analyses_can_exist_per_tender(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('analysis.generate', $this->tender), ['type' => 'consensus']);
+        $this->actingAs($this->user)
+            ->post(route('analysis.generate', $this->tender), ['type' => 'conflicts']);
+        $this->actingAs($this->user)
+            ->post(route('analysis.generate', $this->tender), ['type' => 'consensus']);
+
+        $this->assertEquals(3, $this->tender->analyses()->count());
+    }
 }

@@ -153,4 +153,100 @@ class RespondTest extends TestCase
         $this->post(route('respond.submit', $this->participant->token))
             ->assertForbidden();
     }
+
+    public function test_submitted_participant_cannot_submit(): void
+    {
+        $this->participant->update(['status' => 'submitted', 'submitted_at' => now()]);
+
+        $this->post(route('respond.submit', $this->participant->token))
+            ->assertForbidden();
+    }
+
+    public function test_save_skips_empty_answers(): void
+    {
+        $this->participant->update(['status' => 'active']);
+
+        $this->post(route('respond.save', $this->participant->token), [
+            'answers' => [
+                $this->question->id => '',
+            ],
+        ])->assertRedirect();
+
+        $this->assertEquals(0, $this->participant->responses()->count());
+    }
+
+    public function test_save_updates_existing_response(): void
+    {
+        $this->participant->update(['status' => 'active']);
+
+        TenderResponse::create([
+            'participant_id' => $this->participant->id,
+            'question_id' => $this->question->id,
+            'answer_text' => 'First draft.',
+            'completeness_score' => 0.06,
+        ]);
+
+        $this->post(route('respond.save', $this->participant->token), [
+            'answers' => [
+                $this->question->id => 'Revised and expanded answer with more detail about our approach.',
+            ],
+        ])->assertRedirect();
+
+        $this->assertEquals(1, $this->participant->responses()->count());
+        $response = $this->participant->responses()->first();
+        $this->assertStringContainsString('Revised', $response->answer_text);
+    }
+
+    public function test_save_updates_last_active_at(): void
+    {
+        $this->participant->update(['status' => 'active', 'last_active_at' => now()->subDay()]);
+        $old = $this->participant->last_active_at;
+
+        $this->travel(1)->seconds();
+
+        $this->post(route('respond.save', $this->participant->token), [
+            'answers' => [$this->question->id => 'An answer.'],
+        ]);
+
+        $this->assertTrue($this->participant->fresh()->last_active_at->gt($old));
+    }
+
+    public function test_follow_ups_generated_for_medium_length_responses(): void
+    {
+        $this->participant->update(['status' => 'active']);
+
+        // Create a response between 100 and 300 chars (triggers the "elaborate" follow-up)
+        $mediumAnswer = str_repeat('A detailed answer about the topic. ', 5); // ~175 chars
+
+        TenderResponse::create([
+            'participant_id' => $this->participant->id,
+            'question_id' => $this->question->id,
+            'answer_text' => $mediumAnswer,
+            'completeness_score' => min(1, strlen($mediumAnswer) / 200),
+        ]);
+
+        $this->post(route('respond.submit', $this->participant->token));
+
+        $followUp = FollowUp::first();
+        $this->assertNotNull($followUp);
+        $this->assertStringContainsString('KPIs', $followUp->message);
+    }
+
+    public function test_no_follow_ups_for_long_responses(): void
+    {
+        $this->participant->update(['status' => 'active']);
+
+        $longAnswer = str_repeat('This is a very comprehensive and detailed response. ', 10); // ~520 chars
+
+        TenderResponse::create([
+            'participant_id' => $this->participant->id,
+            'question_id' => $this->question->id,
+            'answer_text' => $longAnswer,
+            'completeness_score' => 1.0,
+        ]);
+
+        $this->post(route('respond.submit', $this->participant->token));
+
+        $this->assertEquals(0, FollowUp::count());
+    }
 }

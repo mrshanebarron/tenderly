@@ -97,10 +97,47 @@ class ModelAccessorTest extends TestCase
         $this->assertStringContainsString('red', $a->type_color);
     }
 
+    public function test_analysis_type_color_gaps(): void
+    {
+        $a = new Analysis(['type' => 'gaps']);
+        $this->assertStringContainsString('amber', $a->type_color);
+    }
+
+    public function test_analysis_type_color_themes(): void
+    {
+        $a = new Analysis(['type' => 'themes']);
+        $this->assertStringContainsString('blue', $a->type_color);
+    }
+
+    public function test_analysis_type_color_risks(): void
+    {
+        $a = new Analysis(['type' => 'risks']);
+        $this->assertStringContainsString('orange', $a->type_color);
+    }
+
+    public function test_analysis_type_color_insights(): void
+    {
+        $a = new Analysis(['type' => 'insights']);
+        $this->assertStringContainsString('violet', $a->type_color);
+    }
+
+    public function test_analysis_type_color_session_prep(): void
+    {
+        $a = new Analysis(['type' => 'session_prep']);
+        $this->assertStringContainsString('cyan', $a->type_color);
+    }
+
     public function test_analysis_type_icon_returns_svg_path(): void
     {
         $a = new Analysis(['type' => 'consensus']);
         $this->assertStringStartsWith('M', $a->type_icon);
+    }
+
+    public function test_each_analysis_type_has_unique_icon(): void
+    {
+        $types = ['consensus', 'conflicts', 'gaps', 'themes', 'risks', 'insights', 'session_prep'];
+        $icons = array_map(fn($t) => (new Analysis(['type' => $t]))->type_icon, $types);
+        $this->assertCount(7, array_unique($icons));
     }
 
     // TenderDocument human_size

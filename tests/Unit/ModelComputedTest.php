@@ -78,4 +78,88 @@ class ModelComputedTest extends TestCase
         $this->assertCount(0, $tender->documents);
         $this->assertCount(0, $tender->analyses);
     }
+
+    public function test_criterion_parent_child_hierarchy(): void
+    {
+        $tender = Tender::factory()->create();
+        $parent = Criterion::factory()->for($tender)->create();
+        $child1 = Criterion::factory()->for($tender)->create(['parent_id' => $parent->id]);
+        $child2 = Criterion::factory()->for($tender)->create(['parent_id' => $parent->id]);
+
+        $this->assertCount(2, $parent->children);
+        $this->assertTrue($child1->parent->is($parent));
+        $this->assertTrue($child2->parent->is($parent));
+    }
+
+    public function test_response_belongs_to_participant_and_question(): void
+    {
+        $tender = Tender::factory()->create();
+        $criterion = Criterion::factory()->for($tender)->create();
+        $question = Question::factory()->for($criterion)->create();
+        $participant = Participant::factory()->for($tender)->create();
+
+        $response = TenderResponse::create([
+            'participant_id' => $participant->id,
+            'question_id' => $question->id,
+            'answer_text' => 'Test answer.',
+            'completeness_score' => 0.5,
+        ]);
+
+        $this->assertTrue($response->participant->is($participant));
+        $this->assertTrue($response->question->is($question));
+    }
+
+    public function test_question_has_many_responses(): void
+    {
+        $tender = Tender::factory()->create();
+        $criterion = Criterion::factory()->for($tender)->create();
+        $question = Question::factory()->for($criterion)->create();
+        $p1 = Participant::factory()->for($tender)->create();
+        $p2 = Participant::factory()->for($tender)->create();
+
+        TenderResponse::create(['participant_id' => $p1->id, 'question_id' => $question->id, 'answer_text' => 'A', 'completeness_score' => 0.1]);
+        TenderResponse::create(['participant_id' => $p2->id, 'question_id' => $question->id, 'answer_text' => 'B', 'completeness_score' => 0.2]);
+
+        $this->assertCount(2, $question->responses);
+    }
+
+    public function test_participant_completion_percent_with_all_answered(): void
+    {
+        $tender = Tender::factory()->create();
+        $criterion = Criterion::factory()->for($tender)->create();
+        $q1 = Question::factory()->for($criterion)->create();
+        $q2 = Question::factory()->for($criterion)->create();
+
+        $participant = Participant::factory()->for($tender)->active()->create();
+
+        TenderResponse::create(['participant_id' => $participant->id, 'question_id' => $q1->id, 'answer_text' => 'Answer one.', 'completeness_score' => 0.5]);
+        TenderResponse::create(['participant_id' => $participant->id, 'question_id' => $q2->id, 'answer_text' => 'Answer two.', 'completeness_score' => 0.5]);
+
+        $this->assertEquals(100, $participant->completion_percent);
+    }
+
+    public function test_follow_up_belongs_to_response(): void
+    {
+        $tender = Tender::factory()->create();
+        $criterion = Criterion::factory()->for($tender)->create();
+        $question = Question::factory()->for($criterion)->create();
+        $participant = Participant::factory()->for($tender)->create();
+
+        $response = TenderResponse::create([
+            'participant_id' => $participant->id,
+            'question_id' => $question->id,
+            'answer_text' => 'Short.',
+            'completeness_score' => 0.03,
+        ]);
+
+        $followUp = \App\Models\FollowUp::create([
+            'response_id' => $response->id,
+            'role' => 'ai',
+            'message' => 'Could you elaborate?',
+            'sequence' => 1,
+        ]);
+
+        $this->assertTrue($followUp->response->is($response));
+        $this->assertCount(1, $response->followUps);
+    }
 }

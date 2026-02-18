@@ -108,6 +108,52 @@ class QuestionTest extends TestCase
         $this->assertTrue($criterion->questions()->where('source', 'ai_generated')->exists());
     }
 
+    public function test_ai_generates_questions_for_team_criterion(): void
+    {
+        $criterion = Criterion::factory()->for($this->tender)->create(['name' => 'Team & Organization']);
+
+        $this->actingAs($this->user)
+            ->post(route('questions.generate', $criterion))
+            ->assertRedirect();
+
+        $this->assertEquals(4, $criterion->questions()->count());
+        $this->assertTrue($criterion->questions()->where('source', 'ai_generated')->exists());
+    }
+
+    public function test_ai_generates_questions_for_risk_criterion(): void
+    {
+        $criterion = Criterion::factory()->for($this->tender)->create(['name' => 'Risk Management']);
+
+        $this->actingAs($this->user)
+            ->post(route('questions.generate', $criterion))
+            ->assertRedirect();
+
+        $this->assertEquals(4, $criterion->questions()->count());
+        $this->assertTrue($criterion->questions()->where('priority', 'critical')->exists());
+    }
+
+    public function test_ai_generates_questions_for_quality_criterion(): void
+    {
+        $criterion = Criterion::factory()->for($this->tender)->create(['name' => 'Quality Assurance']);
+
+        $this->actingAs($this->user)
+            ->post(route('questions.generate', $criterion))
+            ->assertRedirect();
+
+        $this->assertEquals(4, $criterion->questions()->count());
+    }
+
+    public function test_ai_generates_questions_for_timeline_criterion(): void
+    {
+        $criterion = Criterion::factory()->for($this->tender)->create(['name' => 'Timeline & Planning']);
+
+        $this->actingAs($this->user)
+            ->post(route('questions.generate', $criterion))
+            ->assertRedirect();
+
+        $this->assertEquals(4, $criterion->questions()->count());
+    }
+
     public function test_ai_generates_questions_for_unknown_criterion(): void
     {
         $criterion = Criterion::factory()->for($this->tender)->create(['name' => 'Custom Criterion']);
@@ -118,6 +164,21 @@ class QuestionTest extends TestCase
 
         // Default template generates 5 questions
         $this->assertEquals(5, $criterion->questions()->count());
+    }
+
+    public function test_generated_questions_increment_sort_order(): void
+    {
+        $existing = Question::factory()->for($this->criterion)->create(['sort_order' => 3]);
+        $criterion = Criterion::factory()->for($this->tender)->create(['name' => 'Technical Architecture']);
+
+        Question::factory()->for($criterion)->create(['sort_order' => 2]);
+
+        $this->actingAs($this->user)
+            ->post(route('questions.generate', $criterion))
+            ->assertRedirect();
+
+        $maxSort = $criterion->questions()->max('sort_order');
+        $this->assertGreaterThan(2, $maxSort);
     }
 
     public function test_non_owner_cannot_manage_questions(): void

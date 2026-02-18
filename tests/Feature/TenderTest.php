@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Criterion;
 use App\Models\Participant;
+use App\Models\Question;
 use App\Models\Tender;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -209,5 +210,53 @@ class TenderTest extends TestCase
         $this->actingAs($this->user)
             ->post(route('tenders.activate', $tender))
             ->assertForbidden();
+    }
+
+    // Additional fields and edge cases
+
+    public function test_store_persists_all_fields(): void
+    {
+        $this->actingAs($this->user)
+            ->post(route('tenders.store'), [
+                'name' => 'Full Tender',
+                'description' => 'A detailed description.',
+                'objectives' => 'Reduce costs by 50%',
+                'focus_themes' => 'Security, Scalability',
+                'context_notes' => 'Previous vendor failed.',
+                'deadline' => now()->addMonth()->format('Y-m-d'),
+            ])
+            ->assertRedirect();
+
+        $this->assertDatabaseHas('tenders', [
+            'name' => 'Full Tender',
+            'description' => 'A detailed description.',
+            'objectives' => 'Reduce costs by 50%',
+            'focus_themes' => 'Security, Scalability',
+            'context_notes' => 'Previous vendor failed.',
+        ]);
+    }
+
+    public function test_show_includes_total_questions(): void
+    {
+        $tender = Tender::factory()->for($this->user)->create();
+        $criterion = Criterion::factory()->for($tender)->create();
+        Question::factory()->for($criterion)->count(3)->create();
+
+        $this->actingAs($this->user)
+            ->get(route('tenders.show', $tender))
+            ->assertOk()
+            ->assertViewHas('totalQuestions', 3);
+    }
+
+    public function test_index_paginates_results(): void
+    {
+        Tender::factory()->for($this->user)->count(15)->create();
+
+        $response = $this->actingAs($this->user)
+            ->get(route('tenders.index'));
+
+        $response->assertOk();
+        $this->assertEquals(12, $response->viewData('tenders')->count());
+        $this->assertTrue($response->viewData('tenders')->hasMorePages());
     }
 }
