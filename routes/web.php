@@ -11,7 +11,7 @@ use App\Http\Controllers\RespondController;
 use App\Http\Controllers\TenderController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', fn() => redirect()->route('login'));
+Route::get('/', fn() => view('welcome'))->name('home');
 
 // Public participant response
 Route::get('/respond/{token}', [RespondController::class, 'show'])->name('respond.show');
