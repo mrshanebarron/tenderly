@@ -10,6 +10,9 @@
     <style>
         [x-cloak] { display: none !important; }
         body { font-family: 'Inter', sans-serif; }
+        .glow-ring { box-shadow: 0 0 80px rgba(139, 92, 246, 0.08), 0 0 160px rgba(139, 92, 246, 0.04); }
+        .mockup-shadow { box-shadow: 0 25px 60px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05); }
+        .subtle-grid { background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.03) 1px, transparent 0); background-size: 32px 32px; }
     </style>
 </head>
 <body class="antialiased bg-zinc-950 text-zinc-100">
@@ -35,21 +38,29 @@
     </nav>
 
     {{-- Hero — one line, then show the product --}}
-    <section class="pt-20 pb-12 max-w-6xl mx-auto px-6">
+    <section class="pt-24 pb-16 max-w-6xl mx-auto px-6">
         <div class="max-w-3xl">
-            <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-4">Tender Collaboration Platform</p>
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-white mb-5">
-                Structure expert input.<br>Surface what matters.
+            <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-400/80 mb-5">Tender Collaboration Platform</p>
+            <h1 class="text-5xl sm:text-6xl font-extrabold tracking-tight leading-[1.05] text-white mb-6">
+                Structure expert input.<br>
+                <span class="bg-gradient-to-r from-violet-400 to-indigo-400 bg-clip-text text-transparent">Surface what matters.</span>
             </h1>
             <p class="text-lg text-zinc-400 leading-relaxed max-w-xl">
                 Build evaluation criteria, gather responses from subject-matter experts via secure links, then run AI analysis to find consensus, conflicts, and gaps — before the first meeting starts.
             </p>
+            <div class="flex items-center gap-4 mt-8">
+                <a href="{{ route('register') }}" class="px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition shadow-lg shadow-violet-600/20">Get Started</a>
+                <a href="#how-it-works" class="text-sm text-zinc-400 hover:text-white transition flex items-center gap-1.5">
+                    See how it works
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </a>
+            </div>
         </div>
     </section>
 
     {{-- Product Preview: The actual workspace, rendered as a live mockup --}}
-    <section class="pb-20 max-w-6xl mx-auto px-6">
-        <div class="rounded-xl border border-white/10 bg-zinc-900/60 overflow-hidden shadow-2xl shadow-black/40">
+    <section id="how-it-works" class="pb-24 max-w-6xl mx-auto px-6">
+        <div class="rounded-xl border border-white/[0.08] bg-zinc-900/60 overflow-hidden mockup-shadow glow-ring">
             {{-- Fake app chrome --}}
             <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-zinc-900/80">
                 <div class="flex gap-1.5">
@@ -169,14 +180,14 @@
     </section>
 
     {{-- The two sides — how it works, shown as actual product states --}}
-    <section class="py-20 border-t border-white/5">
+    <section class="py-24 border-t border-white/5 subtle-grid">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12 items-start">
+            <div class="grid lg:grid-cols-2 gap-16 items-start">
 
                 {{-- Left: Analysis output --}}
                 <div>
-                    <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-3">What you get</p>
-                    <h2 class="text-2xl font-bold text-white mb-6">Seven types of AI analysis</h2>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-400/80 mb-3">What you get</p>
+                    <h2 class="text-2xl font-bold text-white mb-8">Seven types of AI analysis</h2>
 
                     <div class="space-y-3">
                         <div class="bg-zinc-900/50 border border-white/5 rounded-lg p-4">
@@ -225,8 +236,8 @@
 
                 {{-- Right: Participant view (light side) --}}
                 <div>
-                    <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-3">What participants see</p>
-                    <h2 class="text-2xl font-bold text-white mb-6">Clean response forms, no account required</h2>
+                    <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-400/80 mb-3">What participants see</p>
+                    <h2 class="text-2xl font-bold text-white mb-8">Clean response forms, no account required</h2>
 
                     <div class="rounded-lg border border-zinc-700 bg-zinc-100 overflow-hidden shadow-xl shadow-black/30">
                         {{-- Light mode participant preview --}}
@@ -268,10 +279,10 @@
     </section>
 
     {{-- Session Prep — the payoff --}}
-    <section class="py-20 border-t border-white/5">
+    <section class="py-24 border-t border-white/5">
         <div class="max-w-4xl mx-auto px-6">
-            <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-3">The outcome</p>
-            <h2 class="text-2xl font-bold text-white mb-8">Walk into the evaluation meeting prepared</h2>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-violet-400/80 mb-4">The outcome</p>
+            <h2 class="text-3xl font-bold text-white mb-10">Walk into the evaluation meeting prepared</h2>
 
             <div class="bg-zinc-900/50 border border-white/5 rounded-xl overflow-hidden">
                 <div class="px-6 py-4 border-b border-white/5 flex items-center gap-3">
@@ -315,25 +326,29 @@
         </div>
     </section>
 
-    {{-- CTA — simple --}}
-    <section class="py-20 border-t border-white/5">
+    {{-- CTA --}}
+    <section class="py-24 border-t border-white/5">
         <div class="max-w-2xl mx-auto px-6 text-center">
-            <h2 class="text-2xl font-bold text-white mb-3">Try it yourself</h2>
-            <p class="text-zinc-500 mb-6">Create a tender workspace, invite your evaluators, and see the analysis.</p>
-            <div class="flex items-center justify-center gap-3">
-                <a href="{{ route('register') }}" class="px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition">Create Workspace</a>
-                <a href="{{ route('login') }}" class="px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 text-zinc-300 text-sm font-medium transition">Log in</a>
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/20 bg-violet-500/5 mb-8">
+                <div class="w-2 h-2 rounded-full bg-violet-400 animate-pulse"></div>
+                <span class="text-xs font-medium text-violet-300">Built for evaluation teams in regulated industries</span>
+            </div>
+            <h2 class="text-3xl font-bold text-white mb-4">Replace spreadsheets with structured insight</h2>
+            <p class="text-zinc-500 mb-8 max-w-md mx-auto">Design your evaluation, invite your experts, and let AI surface what your team needs to discuss — in hours, not weeks.</p>
+            <div class="flex items-center justify-center gap-4">
+                <a href="{{ route('register') }}" class="px-8 py-3.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition shadow-lg shadow-violet-600/20">Create Your First Tender</a>
+                <a href="{{ route('login') }}" class="px-6 py-3.5 rounded-lg border border-white/10 hover:border-white/20 text-zinc-300 text-sm font-medium transition">Log in</a>
             </div>
         </div>
     </section>
 
-    <footer class="border-t border-white/5 py-6">
+    <footer class="border-t border-white/5 py-8">
         <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2.5">
                 <div class="w-5 h-5 rounded bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
                     <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08"/></svg>
                 </div>
-                <span class="text-xs text-zinc-500">Tenderly</span>
+                <span class="text-xs text-zinc-600">Tenderly</span>
             </div>
             <p class="text-[10px] text-zinc-700">AI-Powered Tender Collaboration</p>
         </div>
