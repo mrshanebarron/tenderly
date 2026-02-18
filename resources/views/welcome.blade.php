@@ -10,229 +10,332 @@
     <style>
         [x-cloak] { display: none !important; }
         body { font-family: 'Inter', sans-serif; }
-        .gradient-text {
-            background: linear-gradient(135deg, #a78bfa 0%, #818cf8 50%, #6366f1 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .card-glow:hover {
-            box-shadow: 0 0 40px rgba(139, 92, 246, 0.08), 0 0 80px rgba(99, 102, 241, 0.04);
-        }
-        .hero-glow {
-            background: radial-gradient(ellipse 600px 300px at 50% 0%, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
-        }
     </style>
 </head>
 <body class="antialiased bg-zinc-950 text-zinc-100">
 
-    {{-- Nav --}}
-    <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-zinc-950/80 backdrop-blur-xl">
+    {{-- Nav — minimal, same as the app --}}
+    <nav class="border-b border-white/5">
         <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="/" class="flex items-center gap-2.5">
+            <div class="flex items-center gap-2.5">
                 <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg>
                 </div>
                 <span class="font-bold text-lg text-white tracking-tight">Tenderly</span>
-            </a>
-            <div class="flex items-center gap-4">
+            </div>
+            <div class="flex items-center gap-5">
                 @auth
                     <a href="{{ route('dashboard') }}" class="text-sm text-zinc-400 hover:text-white transition">Dashboard</a>
                 @else
                     <a href="{{ route('login') }}" class="text-sm text-zinc-400 hover:text-white transition">Log in</a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-medium hover:from-violet-500 hover:to-indigo-500 transition-all">Get Started</a>
-                    @endif
+                    <a href="{{ route('register') }}" class="text-sm px-4 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white font-medium transition">Register</a>
                 @endauth
             </div>
         </div>
     </nav>
 
-    {{-- Hero --}}
-    <section class="relative pt-32 pb-24 overflow-hidden">
-        <div class="hero-glow absolute inset-0 pointer-events-none"></div>
-        <div class="relative max-w-4xl mx-auto px-6 text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-violet-500/20 bg-violet-500/5 text-violet-300 text-xs font-medium mb-8 tracking-wide uppercase">
-                <span class="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"></span>
-                AI-Powered Collaboration
-            </div>
-
-            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.05] mb-6">
-                Tender evaluation,<br>
-                <span class="gradient-text">done thoughtfully</span>
+    {{-- Hero — one line, then show the product --}}
+    <section class="pt-20 pb-12 max-w-6xl mx-auto px-6">
+        <div class="max-w-3xl">
+            <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-4">Tender Collaboration Platform</p>
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.1] text-white mb-5">
+                Structure expert input.<br>Surface what matters.
             </h1>
-
-            <p class="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                Structure expert input. Surface consensus and conflict. Prepare decisions with
-                AI-driven analysis — all before the first meeting starts.
+            <p class="text-lg text-zinc-400 leading-relaxed max-w-xl">
+                Build evaluation criteria, gather responses from subject-matter experts via secure links, then run AI analysis to find consensus, conflicts, and gaps — before the first meeting starts.
             </p>
+        </div>
+    </section>
 
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="{{ route('register') }}" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold text-base hover:from-violet-500 hover:to-indigo-500 transition-all shadow-lg shadow-violet-500/20">
-                    Start a Tender Workspace
-                </a>
-                <a href="{{ route('login') }}" class="px-8 py-3.5 rounded-xl border border-white/10 text-zinc-300 font-medium text-base hover:border-white/20 hover:text-white transition-all">
-                    View Demo
-                </a>
+    {{-- Product Preview: The actual workspace, rendered as a live mockup --}}
+    <section class="pb-20 max-w-6xl mx-auto px-6">
+        <div class="rounded-xl border border-white/10 bg-zinc-900/60 overflow-hidden shadow-2xl shadow-black/40">
+            {{-- Fake app chrome --}}
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-zinc-900/80">
+                <div class="flex gap-1.5">
+                    <div class="w-3 h-3 rounded-full bg-zinc-700"></div>
+                    <div class="w-3 h-3 rounded-full bg-zinc-700"></div>
+                    <div class="w-3 h-3 rounded-full bg-zinc-700"></div>
+                </div>
+                <div class="flex-1 flex justify-center">
+                    <div class="px-4 py-1 rounded-md bg-zinc-800 text-xs text-zinc-500 font-mono">tenderly.app/tenders/cloud-migration-rfp</div>
+                </div>
+            </div>
+
+            <div class="flex min-h-[520px]">
+                {{-- Mini sidebar --}}
+                <div class="w-48 shrink-0 bg-zinc-900/50 border-r border-white/5 hidden lg:block">
+                    <div class="px-4 py-4 border-b border-white/5">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-md bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
+                                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg>
+                            </div>
+                            <span class="font-bold text-sm text-white">Tenderly</span>
+                        </div>
+                    </div>
+                    <div class="px-2 py-3 space-y-0.5">
+                        <div class="flex items-center gap-2 px-3 py-2 rounded-md text-xs text-zinc-500">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6z"/></svg>
+                            Dashboard
+                        </div>
+                        <div class="flex items-center gap-2 px-3 py-2 rounded-md text-xs bg-white/10 text-white font-medium">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
+                            Tenders
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Main content area --}}
+                <div class="flex-1 p-6 overflow-hidden">
+                    {{-- Breadcrumb + status --}}
+                    <div class="flex items-center gap-2 text-xs mb-5">
+                        <span class="text-zinc-500">Tenders</span>
+                        <svg class="w-3 h-3 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        <span class="font-medium text-white">Cloud Infrastructure Migration RFP</span>
+                        <span class="ml-1 px-2 py-0.5 text-[10px] font-medium rounded-full border text-blue-400 bg-blue-400/10 border-blue-400/20">Active</span>
+                    </div>
+
+                    {{-- Tabs --}}
+                    <div class="flex gap-1 border-b border-white/5 mb-5 -mx-1">
+                        <span class="px-3 py-2 text-xs font-medium text-zinc-500 border-b-2 border-transparent">Overview</span>
+                        <span class="px-3 py-2 text-xs font-medium text-violet-400 border-b-2 border-violet-400">Criteria & Questions</span>
+                        <span class="px-3 py-2 text-xs font-medium text-zinc-500 border-b-2 border-transparent">Participants <span class="text-zinc-700">4</span></span>
+                        <span class="px-3 py-2 text-xs font-medium text-zinc-500 border-b-2 border-transparent">AI Analysis <span class="text-zinc-700">6</span></span>
+                    </div>
+
+                    {{-- Criteria tree --}}
+                    <div class="space-y-3">
+                        {{-- Criterion 1: expanded --}}
+                        <div class="bg-zinc-900/50 border border-white/5 rounded-lg overflow-hidden">
+                            <div class="px-4 py-3 border-b border-white/5 flex items-center gap-2">
+                                <svg class="w-3.5 h-3.5 text-zinc-500 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                <span class="text-sm font-semibold text-white">Technical Architecture</span>
+                                <span class="text-[10px] text-zinc-600">Weight: 30%</span>
+                                <span class="text-[10px] text-zinc-700">5 questions</span>
+                                <span class="ml-auto px-2 py-0.5 text-[10px] font-medium text-violet-400 bg-violet-600/20 border border-violet-500/30 rounded-md">Generate AI Questions</span>
+                            </div>
+                            <div class="divide-y divide-white/5">
+                                <div class="px-4 py-2.5 flex items-start gap-2">
+                                    <span class="shrink-0 mt-0.5 px-1 py-0.5 text-[9px] font-bold rounded text-red-400 bg-red-400/10">C</span>
+                                    <span class="text-xs text-zinc-300">What is your approach to ensuring data security and GDPR compliance throughout the system?</span>
+                                    <span class="ml-auto shrink-0 text-[10px] text-zinc-700">4 responses</span>
+                                </div>
+                                <div class="px-4 py-2.5 flex items-start gap-2">
+                                    <span class="shrink-0 mt-0.5 px-1 py-0.5 text-[9px] font-bold rounded text-amber-400 bg-amber-400/10">H</span>
+                                    <span class="text-xs text-zinc-300">What specific technologies and frameworks do you propose, and why are they the best fit?</span>
+                                    <span class="ml-auto shrink-0 text-[10px] text-zinc-700">4 responses</span>
+                                </div>
+                                <div class="px-4 py-2.5 flex items-start gap-2">
+                                    <span class="shrink-0 mt-0.5 px-1 py-0.5 text-[9px] font-bold rounded text-zinc-400 bg-zinc-400/10">N</span>
+                                    <span class="text-xs text-zinc-300">How will your proposed architecture handle scalability requirements as usage grows?</span>
+                                    <span class="ml-auto shrink-0 text-[10px] text-zinc-700">3 responses</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Criterion 2: collapsed --}}
+                        <div class="bg-zinc-900/50 border border-white/5 rounded-lg">
+                            <div class="px-4 py-3 flex items-center gap-2">
+                                <svg class="w-3.5 h-3.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                <span class="text-sm font-semibold text-white">Risk Management & Mitigation</span>
+                                <span class="text-[10px] text-zinc-600">Weight: 25%</span>
+                                <span class="text-[10px] text-zinc-700">4 questions</span>
+                            </div>
+                        </div>
+
+                        {{-- Criterion 3: collapsed --}}
+                        <div class="bg-zinc-900/50 border border-white/5 rounded-lg">
+                            <div class="px-4 py-3 flex items-center gap-2">
+                                <svg class="w-3.5 h-3.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                <span class="text-sm font-semibold text-white">Team & Organization</span>
+                                <span class="text-[10px] text-zinc-600">Weight: 20%</span>
+                                <span class="text-[10px] text-zinc-700">4 questions</span>
+                            </div>
+                        </div>
+
+                        {{-- Criterion 4: collapsed --}}
+                        <div class="bg-zinc-900/50 border border-white/5 rounded-lg">
+                            <div class="px-4 py-3 flex items-center gap-2">
+                                <svg class="w-3.5 h-3.5 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                <span class="text-sm font-semibold text-white">Timeline & Planning</span>
+                                <span class="text-[10px] text-zinc-600">Weight: 15%</span>
+                                <span class="text-[10px] text-zinc-700">4 questions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    {{-- How It Works --}}
-    <section class="py-24 border-t border-white/5">
+    {{-- The two sides — how it works, shown as actual product states --}}
+    <section class="py-20 border-t border-white/5">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-3">How It Works</p>
-                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Three phases. One clear outcome.</h2>
-            </div>
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
 
-            <div class="grid md:grid-cols-3 gap-8">
-                {{-- Step 1 --}}
-                <div class="relative group">
-                    <div class="absolute -top-3 -left-3 w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-violet-500/20">1</div>
-                    <div class="pt-10 p-6 rounded-2xl border border-white/5 bg-zinc-900/30 group-hover:border-white/10 transition-all h-full">
-                        <h3 class="text-lg font-semibold text-white mb-2">Design</h3>
-                        <p class="text-sm text-zinc-400 leading-relaxed">
-                            Build your evaluation framework. Define weighted criteria, upload tender documents, and let AI generate targeted questions per criterion.
-                        </p>
+                {{-- Left: Analysis output --}}
+                <div>
+                    <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-3">What you get</p>
+                    <h2 class="text-2xl font-bold text-white mb-6">Seven types of AI analysis</h2>
+
+                    <div class="space-y-3">
+                        <div class="bg-zinc-900/50 border border-white/5 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2 py-0.5 text-[10px] font-bold rounded text-emerald-400 bg-emerald-400/10">CONSENSUS</span>
+                                <span class="text-xs text-zinc-600">87% confidence</span>
+                            </div>
+                            <p class="text-sm text-zinc-400 leading-relaxed">Strong alignment on microservices architecture and API-first design across all four participants.</p>
+                            <div class="mt-3 flex items-center gap-3 p-2 bg-zinc-900/50 border border-white/5 rounded-md">
+                                <span class="text-sm font-bold text-emerald-400">92%</span>
+                                <span class="text-xs text-zinc-500">Technical Architecture — all favor modular approach</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-zinc-900/50 border border-white/5 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2 py-0.5 text-[10px] font-bold rounded text-red-400 bg-red-400/10">CONFLICTS</span>
+                                <span class="text-xs text-zinc-600">79% confidence</span>
+                            </div>
+                            <p class="text-sm text-zinc-400 leading-relaxed">Cloud provider selection has three competing positions that need resolution.</p>
+                            <div class="mt-3 space-y-1">
+                                <div class="flex items-start gap-2 text-xs text-zinc-500"><span class="text-zinc-600 mt-0.5">&bull;</span> AWS preferred for enterprise features</div>
+                                <div class="flex items-start gap-2 text-xs text-zinc-500"><span class="text-zinc-600 mt-0.5">&bull;</span> Azure preferred for existing integrations</div>
+                                <div class="flex items-start gap-2 text-xs text-zinc-500"><span class="text-zinc-600 mt-0.5">&bull;</span> Multi-cloud strategy recommended</div>
+                            </div>
+                        </div>
+
+                        <div class="bg-zinc-900/50 border border-white/5 rounded-lg p-4">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2 py-0.5 text-[10px] font-bold rounded text-amber-400 bg-amber-400/10">GAPS</span>
+                            </div>
+                            <div class="flex items-start gap-2">
+                                <span class="shrink-0 mt-0.5 px-1.5 py-0.5 text-[9px] font-bold rounded text-red-400 bg-red-400/10">CRITICAL</span>
+                                <span class="text-xs text-zinc-400">No participant provided detailed RPO/RTO targets or failover procedures for disaster recovery.</span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2.5 py-1 text-[10px] font-medium rounded text-blue-400 bg-blue-400/10 border border-blue-400/20">Themes</span>
+                            <span class="px-2.5 py-1 text-[10px] font-medium rounded text-orange-400 bg-orange-400/10 border border-orange-400/20">Risks</span>
+                            <span class="px-2.5 py-1 text-[10px] font-medium rounded text-violet-400 bg-violet-400/10 border border-violet-400/20">Insights</span>
+                            <span class="px-2.5 py-1 text-[10px] font-medium rounded text-cyan-400 bg-cyan-400/10 border border-cyan-400/20">Session Prep</span>
+                        </div>
                     </div>
                 </div>
 
-                {{-- Step 2 --}}
-                <div class="relative group">
-                    <div class="absolute -top-3 -left-3 w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-violet-500/20">2</div>
-                    <div class="pt-10 p-6 rounded-2xl border border-white/5 bg-zinc-900/30 group-hover:border-white/10 transition-all h-full">
-                        <h3 class="text-lg font-semibold text-white mb-2">Gather</h3>
-                        <p class="text-sm text-zinc-400 leading-relaxed">
-                            Invite subject-matter experts via secure token links. They respond at their own pace. Track completion and follow up with AI-generated probing questions.
-                        </p>
-                    </div>
-                </div>
+                {{-- Right: Participant view (light side) --}}
+                <div>
+                    <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-3">What participants see</p>
+                    <h2 class="text-2xl font-bold text-white mb-6">Clean response forms, no account required</h2>
 
-                {{-- Step 3 --}}
-                <div class="relative group">
-                    <div class="absolute -top-3 -left-3 w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-sm font-bold text-white shadow-lg shadow-violet-500/20">3</div>
-                    <div class="pt-10 p-6 rounded-2xl border border-white/5 bg-zinc-900/30 group-hover:border-white/10 transition-all h-full">
-                        <h3 class="text-lg font-semibold text-white mb-2">Analyze</h3>
-                        <p class="text-sm text-zinc-400 leading-relaxed">
-                            Generate seven types of AI analysis: consensus points, conflicts, gaps, themes, risks, insights, and a complete session preparation brief.
-                        </p>
+                    <div class="rounded-lg border border-zinc-700 bg-zinc-100 overflow-hidden shadow-xl shadow-black/30">
+                        {{-- Light mode participant preview --}}
+                        <div class="px-5 py-4 border-b border-zinc-200">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-5 h-5 rounded-md bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
+                                    <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08"/></svg>
+                                </div>
+                                <span class="font-bold text-xs text-zinc-900">Tenderly</span>
+                            </div>
+                            <p class="text-sm font-bold text-zinc-900">Cloud Infrastructure Migration RFP</p>
+                            <p class="text-xs text-zinc-500 mt-0.5">Welcome, <strong class="text-zinc-700">Willem van der Berg</strong> (Solution Architect)</p>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div>
+                                <p class="text-xs font-semibold text-zinc-700 mb-2">Technical Architecture <span class="text-zinc-400 font-normal">Weight: 30%</span></p>
+                                <div class="bg-white rounded-lg border border-zinc-200 overflow-hidden">
+                                    <div class="px-3 py-2 bg-zinc-50 border-b border-zinc-100 flex items-start gap-1.5">
+                                        <span class="shrink-0 mt-0.5 px-1 py-0.5 text-[8px] font-bold rounded text-red-600 bg-red-50">CRITICAL</span>
+                                        <p class="text-[11px] text-zinc-700">What is your approach to ensuring data security and GDPR compliance?</p>
+                                    </div>
+                                    <div class="p-3">
+                                        <div class="w-full h-16 bg-zinc-50 rounded border border-zinc-200 p-2">
+                                            <p class="text-[10px] text-zinc-400">Our approach centers on privacy by design principles. We implement data classification at the ingestion layer, ensuring PII is identified and tagged before it enters the processing pipeline. For GDPR Article 17 compliance, we maintain a deletion propagation system that...</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-3 py-1.5 bg-violet-600 text-white text-[10px] font-semibold rounded-md">Save Progress</span>
+                                <span class="px-3 py-1.5 bg-zinc-900 text-white text-[10px] font-semibold rounded-md">Submit Final</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {{-- Features --}}
-    <section class="py-24 border-t border-white/5">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-3">Capabilities</p>
-                <h2 class="text-3xl sm:text-4xl font-bold tracking-tight">Built for procurement teams<br>who think deeply</h2>
-            </div>
-
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="p-6 rounded-2xl border border-white/5 bg-zinc-900/30 card-glow transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-violet-500/10 border border-violet-500/20 flex items-center justify-center mb-4">
-                        <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1.5">Weighted Criteria Hierarchy</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Parent and child criteria with customizable weights. Structure your evaluation exactly how your organization thinks.</p>
-                </div>
-
-                <div class="p-6 rounded-2xl border border-white/5 bg-zinc-900/30 card-glow transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center mb-4">
-                        <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1.5">AI Question Generation</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Context-aware questions generated per criterion. Technical, risk, quality, and timeline templates adapt to your tender scope.</p>
-                </div>
-
-                <div class="p-6 rounded-2xl border border-white/5 bg-zinc-900/30 card-glow transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4">
-                        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1.5">Secure Token Access</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Participants access their questionnaire via unique token links. No accounts required. Lock access when evaluation closes.</p>
-                </div>
-
-                <div class="p-6 rounded-2xl border border-white/5 bg-zinc-900/30 card-glow transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-4">
-                        <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1.5">Real-Time Tracking</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Monitor response completeness, participant status, and overall progress. Resend invitations and follow up as needed.</p>
-                </div>
-
-                <div class="p-6 rounded-2xl border border-white/5 bg-zinc-900/30 card-glow transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-4">
-                        <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1.5">Seven Analysis Types</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Consensus, conflicts, gaps, themes, risks, insights, and session prep. Each analysis cross-references all participant responses.</p>
-                </div>
-
-                <div class="p-6 rounded-2xl border border-white/5 bg-zinc-900/30 card-glow transition-all">
-                    <div class="w-10 h-10 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center mb-4">
-                        <svg class="w-5 h-5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
-                    </div>
-                    <h3 class="font-semibold text-white mb-1.5">Session Preparation Brief</h3>
-                    <p class="text-sm text-zinc-500 leading-relaxed">Walk into evaluation meetings prepared. Discussion topics, clarification questions, and decision points — generated from the data.</p>
+                    <p class="text-xs text-zinc-600 mt-3">Participants receive a unique token link. No signup, no password. Responses auto-save and can be submitted when ready.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    {{-- Stats --}}
+    {{-- Session Prep — the payoff --}}
     <section class="py-20 border-t border-white/5">
         <div class="max-w-4xl mx-auto px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div>
-                    <p class="text-3xl sm:text-4xl font-bold gradient-text">7</p>
-                    <p class="text-sm text-zinc-500 mt-1">Analysis Types</p>
+            <p class="text-xs font-medium uppercase tracking-widest text-violet-400 mb-3">The outcome</p>
+            <h2 class="text-2xl font-bold text-white mb-8">Walk into the evaluation meeting prepared</h2>
+
+            <div class="bg-zinc-900/50 border border-white/5 rounded-xl overflow-hidden">
+                <div class="px-6 py-4 border-b border-white/5 flex items-center gap-3">
+                    <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z"/></svg>
+                    <div>
+                        <h3 class="font-semibold text-white text-sm">Session Preparation Brief</h3>
+                        <p class="text-[10px] text-zinc-600">Auto-generated from all participant responses</p>
+                    </div>
+                    <span class="ml-auto px-2 py-0.5 text-[10px] font-bold rounded text-cyan-400 bg-cyan-400/10">SESSION PREP</span>
                 </div>
-                <div>
-                    <p class="text-3xl sm:text-4xl font-bold gradient-text">100%</p>
-                    <p class="text-sm text-zinc-500 mt-1">Test Coverage</p>
-                </div>
-                <div>
-                    <p class="text-3xl sm:text-4xl font-bold gradient-text">0</p>
-                    <p class="text-sm text-zinc-500 mt-1">Accounts Required</p>
-                </div>
-                <div>
-                    <p class="text-3xl sm:text-4xl font-bold gradient-text">&infin;</p>
-                    <p class="text-sm text-zinc-500 mt-1">Criteria Depth</p>
+                <div class="p-6 space-y-5">
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-3">Discussion Topics</p>
+                        <div class="space-y-2">
+                            <div class="flex items-start gap-3">
+                                <span class="shrink-0 mt-0.5 px-1.5 py-0.5 text-[9px] font-bold rounded text-red-400 bg-red-400/10">CRITICAL</span>
+                                <div>
+                                    <p class="text-sm text-white">Define disaster recovery requirements</p>
+                                    <p class="text-xs text-zinc-600">15 min &middot; Gap identified — no RPO/RTO targets established</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <span class="shrink-0 mt-0.5 px-1.5 py-0.5 text-[9px] font-bold rounded text-amber-400 bg-amber-400/10">HIGH</span>
+                                <div>
+                                    <p class="text-sm text-white">Resolve cloud provider strategy</p>
+                                    <p class="text-xs text-zinc-600">20 min &middot; Three competing positions need resolution</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-zinc-300 uppercase tracking-wider mb-3">Decision Points</p>
+                        <div class="space-y-1.5">
+                            <p class="text-sm text-zinc-400">Cloud provider commitment (AWS vs Azure vs Multi-cloud)</p>
+                            <p class="text-sm text-zinc-400">Data residency policy (EU-only vs distributed)</p>
+                            <p class="text-sm text-zinc-400">Go/No-Go criteria for Phase 1 release</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    {{-- CTA --}}
-    <section class="py-24 border-t border-white/5">
-        <div class="max-w-3xl mx-auto px-6 text-center">
-            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-                Better evaluations start with<br>
-                <span class="gradient-text">better structure</span>
-            </h2>
-            <p class="text-zinc-400 mb-8 max-w-xl mx-auto">
-                Replace scattered emails and conflicting spreadsheets with a single collaborative workspace that surfaces what matters.
-            </p>
-            <a href="{{ route('register') }}" class="inline-flex px-8 py-3.5 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-semibold hover:from-violet-500 hover:to-indigo-500 transition-all shadow-lg shadow-violet-500/20">
-                Create Your First Tender
-            </a>
+    {{-- CTA — simple --}}
+    <section class="py-20 border-t border-white/5">
+        <div class="max-w-2xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold text-white mb-3">Try it yourself</h2>
+            <p class="text-zinc-500 mb-6">Create a tender workspace, invite your evaluators, and see the analysis.</p>
+            <div class="flex items-center justify-center gap-3">
+                <a href="{{ route('register') }}" class="px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition">Create Workspace</a>
+                <a href="{{ route('login') }}" class="px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 text-zinc-300 text-sm font-medium transition">Log in</a>
+            </div>
         </div>
     </section>
 
-    {{-- Footer --}}
-    <footer class="border-t border-white/5 py-8">
-        <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <footer class="border-t border-white/5 py-6">
+        <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
             <div class="flex items-center gap-2">
-                <div class="w-6 h-6 rounded-md bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
-                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/></svg>
+                <div class="w-5 h-5 rounded bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center">
+                    <svg class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08"/></svg>
                 </div>
-                <span class="text-sm font-medium text-zinc-400">Tenderly</span>
+                <span class="text-xs text-zinc-500">Tenderly</span>
             </div>
-            <p class="text-xs text-zinc-600">AI-Powered Tender Collaboration Platform</p>
+            <p class="text-[10px] text-zinc-700">AI-Powered Tender Collaboration</p>
         </div>
     </footer>
 
