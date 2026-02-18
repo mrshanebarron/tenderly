@@ -3,6 +3,21 @@
 
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+    {{-- Demo credentials banner --}}
+    <div x-data class="mb-5 p-3 bg-violet-600/10 border border-violet-500/20 rounded-lg">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-xs font-medium text-violet-300">Demo Access</p>
+                <p class="text-xs text-zinc-500 mt-0.5">admin@tenderly.com</p>
+            </div>
+            <button type="button"
+                @click="document.getElementById('email').value = 'admin@tenderly.com'; document.getElementById('password').value = 'password'; document.getElementById('email').dispatchEvent(new Event('input')); document.getElementById('password').dispatchEvent(new Event('input'));"
+                class="px-3 py-1.5 text-xs font-medium text-violet-300 bg-violet-600/20 hover:bg-violet-600/30 border border-violet-500/30 rounded-md transition">
+                Fill credentials
+            </button>
+        </div>
+    </div>
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
