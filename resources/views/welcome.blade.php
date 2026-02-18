@@ -11,6 +11,21 @@
         [x-cloak] { display: none !important; }
         body { font-family: 'DM Sans', sans-serif; }
         .font-serif { font-family: 'DM Serif Display', Georgia, serif; }
+        .bg-hero {
+            background:
+                radial-gradient(ellipse 80% 50% at 70% 40%, rgba(204, 251, 241, 0.25), transparent),
+                radial-gradient(ellipse 60% 40% at 20% 80%, rgba(224, 242, 254, 0.2), transparent),
+                white;
+        }
+        .bg-grid {
+            background-image:
+                linear-gradient(to right, rgb(226 232 240 / 0.4) 1px, transparent 1px),
+                linear-gradient(to bottom, rgb(226 232 240 / 0.4) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+        .bg-mockup-glow {
+            background: radial-gradient(ellipse 70% 60% at 50% 60%, rgba(204, 251, 241, 0.15), transparent 70%);
+        }
     </style>
 </head>
 <body class="antialiased bg-white text-slate-800">
@@ -35,30 +50,30 @@
         </div>
     </nav>
 
-    {{-- Hero --}}
-    <section class="pt-20 pb-16 max-w-6xl mx-auto px-6">
-        <div class="max-w-3xl">
-            <p class="text-xs font-semibold uppercase tracking-[0.15em] text-teal-700 mb-5">Tender Evaluation Platform</p>
-            <h1 class="font-serif text-4xl sm:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">
-                Gather expert input.<br>
-                Surface what your committee<br>
-                needs to discuss.
-            </h1>
-            <p class="text-lg text-slate-500 leading-relaxed max-w-xl">
-                Build evaluation criteria, collect structured responses from subject-matter experts, and generate analysis that reveals consensus, conflicts, and gaps — before the first meeting.
-            </p>
-            <div class="flex items-center gap-4 mt-8">
-                <a href="{{ route('register') }}" class="px-6 py-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition">Start an evaluation</a>
-                <a href="#product" class="text-sm text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5">
-                    See how it works
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                </a>
+    {{-- Hero + Product Preview --}}
+    <section class="bg-hero">
+        <div class="pt-20 pb-16 max-w-6xl mx-auto px-6">
+            <div class="max-w-3xl">
+                <p class="text-xs font-semibold uppercase tracking-[0.15em] text-teal-700 mb-5">Tender Evaluation Platform</p>
+                <h1 class="font-serif text-4xl sm:text-5xl font-bold tracking-tight leading-[1.15] text-slate-900 mb-6">
+                    Gather expert input.<br>
+                    Surface what your committee<br>
+                    needs to discuss.
+                </h1>
+                <p class="text-lg text-slate-500 leading-relaxed max-w-xl">
+                    Build evaluation criteria, collect structured responses from subject-matter experts, and generate analysis that reveals consensus, conflicts, and gaps — before the first meeting.
+                </p>
+                <div class="flex items-center gap-4 mt-8">
+                    <a href="{{ route('register') }}" class="px-6 py-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold transition">Start an evaluation</a>
+                    <a href="#product" class="text-sm text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5">
+                        See how it works
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
-    </section>
 
-    {{-- Product Preview --}}
-    <section id="product" class="pb-24 max-w-6xl mx-auto px-6">
+        <div id="product" class="pb-24 max-w-6xl mx-auto px-6">
         <div class="rounded-xl border border-slate-200 bg-slate-50 overflow-hidden shadow-xl shadow-slate-900/5">
             {{-- Browser chrome --}}
             <div class="flex items-center gap-2 px-4 py-3 border-b border-slate-200 bg-white">
@@ -172,10 +187,11 @@
                 </div>
             </div>
         </div>
+        </div>
     </section>
 
     {{-- Two sides --}}
-    <section class="py-24 border-t border-slate-200">
+    <section class="py-24 border-t border-slate-200 bg-grid">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-16 items-start">
 
