@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tenderly — Structured Tender Evaluation</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700,800&family=source-serif-4:400,500,600,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=dm-sans:300,400,500,600,700&family=dm-serif-display:400,400i&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         [x-cloak] { display: none !important; }
-        body { font-family: 'Inter', sans-serif; }
-        .font-serif { font-family: 'Source Serif 4', Georgia, serif; }
-        .border-rule { border-image: linear-gradient(to right, transparent, rgb(203 213 225 / 0.4), transparent) 1; }
+        body { font-family: 'DM Sans', sans-serif; }
+        .font-serif { font-family: 'DM Serif Display', Georgia, serif; }
     </style>
 </head>
 <body class="antialiased bg-white text-slate-800">
